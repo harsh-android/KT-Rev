@@ -37,5 +37,27 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+        CallApi(apiInterface)
+
+    }
+
+    private fun CallApi(apiInterface: ApiInterface) {
+        apiInterface.getPlayingMovie(ApiClient.API_KEY).enqueue(object : Callback<LatestMovieData> {
+            override fun onResponse(
+                call: Call<LatestMovieData>,
+                response: Response<LatestMovieData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e(TAG, "onResponse: ============ ")
+                } else {
+                    Log.e(TAG, "onResponse: ???????????? " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<LatestMovieData>, t: Throwable) {
+                Log.e(TAG, "onFailure: ----------- " + t.message)
+            }
+
+        })
     }
 }
